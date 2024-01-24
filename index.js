@@ -29,8 +29,8 @@ app.post('/api/v1/sendform/', async (req, res) => {
 	if (!await VerifyCAPTCHA(token)) {
 		return res.status(401).end()
 	}
-
-	let text = urlencode(`Получена заявка \n${req.get('Referrer')} \n👨: ${Name} \n📞: ${Phone} \n📧: ${Email} \n📄: ${Comment}`)
+	
+	let text = express.urlencoded(`Получена заявка \n${req.get('Referrer')} \n👨: ${Name} \n📞: ${Phone} \n📧: ${Email} \n📄: ${Comment}`)
 
 	await axios.get(`https://api.telegram.org/bot${BOTTOKEN}/sendMessage?text=${text}&chat_id=${CHAT}`)
 
