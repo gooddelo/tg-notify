@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require('body-parser');
 const cors = require('cors')
 const axios = require('axios')
 
@@ -9,6 +10,7 @@ const GCAPTCHA = process.env.GCAPTCHA
 const CHAT = process.env.CHAT
 
 app.use(cors())
+app.use(bodyParser.urlencoded({ extended: true }));
 
 async function VerifyCAPTCHA(token) {
 	let res = await axios.get(`https://www.google.com/recaptcha/api/siteverify?secret=${GCAPTCHA}&response=${token}`)
@@ -20,8 +22,8 @@ app.get('/', (req, res) => {
 })
 
 app.post('/api/v1/sendform/', async (req, res) => {
-	console.log(req.query)
-	let { name, phone, email, comment, token, getstatus } = req.query
+	console.log(req.body)
+	let { name, phone, email, comment, token, getstatus } = req.body
 
 	if (!await VerifyCAPTCHA(token)) {
 		return res.status(401).end()
