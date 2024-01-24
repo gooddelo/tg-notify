@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 	res.send('<h1>Gooddelo API</h1><p>by Tojefin</p>')
 })
 
-app.get('/api/v1/sendform/', async (req, res) => {
+app.post('/api/v1/sendform/', async (req, res) => {
 	let { name, phone, email, comment, token, getstatus } = req.body
 
 	if (!VerifyCAPTCHA(token)) {
