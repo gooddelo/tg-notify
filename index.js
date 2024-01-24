@@ -20,9 +20,10 @@ app.get('/', (req, res) => {
 })
 
 app.post('/api/v1/sendform/', async (req, res) => {
-	let { name, phone, email, comment, token, getstatus } = req.body
+	console.log(req.query)
+	let { name, phone, email, comment, token, getstatus } = req.query
 
-	if (!VerifyCAPTCHA(token)) {
+	if (!await VerifyCAPTCHA(token)) {
 		return res.status(401).end()
 	}
 
