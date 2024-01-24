@@ -14,8 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 async function VerifyCAPTCHA(token) {
 	let recap = await axios.get(`https://www.google.com/recaptcha/api/siteverify?secret=${GCAPTCHA}&response=${token}`)
-	console.log(recap.response)
-	return recap.response
+	console.log(recap.data.success)
+	return recap.data.success
 }
 
 app.get('/', (req, res) => {
@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 
 app.post('/api/v1/sendform/', async (req, res) => {
 	console.log(req.body)
-	let { name, phone, email, comment, token, getstatus } = req.body
+	let { Name, Phone, Email, Comment, token, getStatus } = req.body
 
 	if (!await VerifyCAPTCHA(token)) {
 		return res.status(401).end()
@@ -33,15 +33,15 @@ app.post('/api/v1/sendform/', async (req, res) => {
 	let text = `
 	Получена заявка \n
 	${req.get('Referrer')} \n
-	👨: ${name} \n
-	📞: ${phone} \n
-	📧: ${email} \n
-	📄: ${comment} 
+	👨: ${Name} \n
+	📞: ${Phone} \n
+	📧: ${Email} \n
+	📄: ${Comment} 
 	`
 
 	await axios.get(`https://api.telegram.org/bot${BOTTOKEN}/sendMessage?text=${text}&chat_id=${CHAT}`)
 
-	if (getstatus) {
+	if (getStatus) {
 		return res.json({ done: true })
 	}
 
