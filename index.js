@@ -19,19 +19,20 @@ app.get('/', (req, res) => {
 	res.send('<h1>Gooddelo API</h1><p>by Tojefin</p>')
 })
 
-app.post('/api/v1/sendform/', async (req, res) => {
-	let { name, phone, email, comment, token, getstatus } = req.query
+app.get('/api/v1/sendform/', async (req, res) => {
+	let { name, phone, email, comment, token, getstatus } = req.body
 
 	if (!VerifyCAPTCHA(token)) {
 		return res.status(401).end()
 	}
 
-	let text = `Получена заявка
-	${req.get('Referrer')}
-	👨: ${name}
-	📞: ${phone}
-	📧: ${email}
-	📄: ${comment}
+	let text = `
+	Получена заявка \n
+	${req.get('Referrer')} \n
+	👨: ${name} \n
+	📞: ${phone} \n
+	📧: ${email} \n
+	📄: ${comment} 
 	`
 
 	await axios.get(`https://api.telegram.org/bot${BOTTOKEN}/sendMessage?text=${text}&chat_id=${CHAT}`)
