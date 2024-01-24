@@ -1,0 +1,12 @@
+{
+  "name": "tg-notify",
+  "version": "2.0.0",
+  "description": "API для обработки форм с сайтов и отправки их в telegram",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
