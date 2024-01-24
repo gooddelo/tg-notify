@@ -13,8 +13,9 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
 
 async function VerifyCAPTCHA(token) {
-	let res = await axios.get(`https://www.google.com/recaptcha/api/siteverify?secret=${GCAPTCHA}&response=${token}`)
-	return res.data.text
+	let recap = await axios.get(`https://www.google.com/recaptcha/api/siteverify?secret=${GCAPTCHA}&response=${token}`)
+	console.log(recap.response)
+	return recap.response
 }
 
 app.get('/', (req, res) => {
